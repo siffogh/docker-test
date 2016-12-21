@@ -1,17 +1,21 @@
-mongo:
-  image: mongo
-  ports:
-    - "27017:27017"
-  volumes:
-    - /usr/local/var/mongodb:/data/db
+version: '2'
+services:
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - /usr/local/var/mongodb:/data/db
 
 
-server:
-  build: ./task-server
-  dockerfile: Dockerfile
-  ports:
-    - "3000:3000"
-  restart: always
-  links:
-    - mongo
+  server:
+    build: ./task-server
+    ports:
+      - "3000:3000"
+    restart: always
+    environment:
+      - ENV=test
+    links:
+      - mongo
+
 
